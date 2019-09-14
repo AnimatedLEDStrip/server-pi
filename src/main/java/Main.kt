@@ -23,10 +23,19 @@ package animatedledstrip.server.example
  */
 
 
+import animatedledstrip.cmdline.CommandLine
 import animatedledstrip.leds.AnimatedLEDStripPi
 import animatedledstrip.server.AnimatedLEDStripServer
+import animatedledstrip.server.options
+import animatedledstrip.server.waitUntilStop
+import org.apache.commons.cli.DefaultParser
 
 fun main(args: Array<String>) {
-    AnimatedLEDStripServer(args, AnimatedLEDStripPi::class).start().waitUntilStop()
+    val cmdLine = DefaultParser().parse(options, args)
+
+    if (cmdLine.hasOption("C"))
+        CommandLine().loop()
+    else
+        AnimatedLEDStripServer(args, AnimatedLEDStripPi::class).start().waitUntilStop()
 }
 
