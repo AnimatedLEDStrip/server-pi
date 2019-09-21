@@ -1,0 +1,9 @@
+[Unit]
+Description=Run an AnimatedLEDStrip Server
+After=network-online.target
+
+[Service]
+ExecStart=java -jar /usr/leds/ledserver.jar -f /usr/leds/led.config
+
+[Install]
+WantedBy=multi-user.target

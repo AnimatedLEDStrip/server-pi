@@ -1,0 +1,66 @@
+- hosts: localhost
+  become: yes
+  tasks:
+  - name: Increase SPI buff size
+    lineinfile:
+      path: /boot/cmdline.txt
+      line: spidev.bufsiz=32768
+
+  - name: Change GPU Core Frequency
+    lineinfile:
+      path: /boot/config.txt
+      line: core_freq=250
+
+
+  - name: Make /usr/leds directory
+    file:
+      path: /usr/leds
+      state: directory
+      mode: '0777'
+
+
+  - name: Install maven
+    apt:
+      name: maven
+
+  - name: Clone Server Example
+    git:
+      repo: https://github.com/AnimatedLEDStrip/AnimatedLEDStripServerExample.git
+
+  - name: Clone Pi
+    git:
+      repo: https://github.com/AnimatedLEDStrip/AnimatedLEDStripPi.git
+
+  - name: Install dependency jar into maven
+    shell: mvn install:install-file -Dfile=AnimatedLEDStripPi/src/main/resources/rpi-ws281x-java-2.0.0-SNAPSHOT.jar -DgroupId=com.github.mbelling -DartifactId=rpi-ws281x-java -Dversion=2.0.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
+
+  - name: Create jar
+    shell: mvn package
+    args:
+      chdir: AnimatedLEDStripServerExample
+
+
+  - name: Copy jar
+    copy:
+      src: AnimatedLEDStripServerExample/target/animatedledstrip-server-example-1.0.jar
+      dest: /usr/leds/ledserver.jar
+      mode: '0777'
+
+  - name: Add led.config
+    copy:
+      src: ansible/led.config
+      dest: /usr/leds/led.config
+      mode: '0777'
+
+  - name: Add ledserver service
+    copy:
+      src: ansible/ledserver.service
+      dest: /lib/systemd/system/ledserver.service
+
+
+  - name: Enable ledserver
+    shell: systemctl enable ledserver
+
+  - name: Daemon reload
+    shell: systemctl daemon-reload
+
