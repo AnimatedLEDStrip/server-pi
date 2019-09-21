@@ -6,7 +6,7 @@
 
     <groupId>io.github.animatedledstrip</groupId>
     <artifactId>animatedledstrip-server-example</artifactId>
-    <version>0.3-SNAPSHOT</version>
+    <version>1.0</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>An AnimatedLEDStripServer Example for Raspberry Pis</description>
@@ -58,12 +58,12 @@
         <dependency>
             <groupId>io.github.animatedledstrip</groupId>
             <artifactId>animatedledstrip-pi</artifactId>
-            <version>0.4-SNAPSHOT</version>
+            <version>0.4</version>
         </dependency>
         <dependency>
             <groupId>io.github.animatedledstrip</groupId>
             <artifactId>animatedledstrip-server</artifactId>
-            <version>0.4-SNAPSHOT</version>
+            <version>0.4</version>
         </dependency>
     </dependencies>
 
