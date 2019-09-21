@@ -1,4 +1,4 @@
-- hosts: raspberrypi
+- hosts: localhost
   become: yes
   tasks:
   - name: Increase SPI buff size
