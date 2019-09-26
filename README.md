@@ -19,5 +19,5 @@ The Pi 4B initializes its GPU enough that a dummy plug is not necessary.
 
 ## Configuration
 The config file is located at `/usr/leds/led.config`. See the 
-[AnimatedLEDStripServer wiki](https://github.com/AnimatedLEDStrip/AnimatedLEDStripServer/wiki) 
+[AnimatedLEDStripServer wiki](https://github.com/AnimatedLEDStrip/AnimatedLEDStripServer/wiki/Configuration) 
 for instructions on configuring the server.
