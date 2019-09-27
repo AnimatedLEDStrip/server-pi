@@ -2,6 +2,9 @@
 An example usage of the AnimatedLEDStripServer library with the AnimatedLEDStripPi library.
 
 ## Install
+This repository supports installation using `ansible-pull`. A device running `ansible-pull` pulls a repository
+and then runs the configuration tasks on itself.
+
 To install this server on a Raspberry Pi, run
 ```
 sudo pip install ansible
