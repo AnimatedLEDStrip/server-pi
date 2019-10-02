@@ -23,12 +23,12 @@
     apt:
       name: maven
 
-  - name: Clone Server Example
+  - name: Clone Pi Server
     git:
       repo: https://github.com/AnimatedLEDStrip/AnimatedLEDStripServerExample.git
       dest: AnimatedLEDStripServerExample
 
-  - name: Clone Pi
+  - name: Clone Pi Device Library
     git:
       repo: https://github.com/AnimatedLEDStrip/AnimatedLEDStripPi.git
       dest: AnimatedLEDStripPi
@@ -36,7 +36,7 @@
   - name: Install dependency jar into maven
     shell: mvn install:install-file -Dfile=AnimatedLEDStripPi/src/main/resources/rpi-ws281x-java-2.0.0-SNAPSHOT.jar -DgroupId=com.github.mbelling -DartifactId=rpi-ws281x-java -Dversion=2.0.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
 
-  - name: Create jar
+  - name: Package jar
     shell: mvn package
     args:
       chdir: AnimatedLEDStripServerExample
