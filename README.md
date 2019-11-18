@@ -33,9 +33,9 @@ See the [AnimatedLEDStripServer wiki](https://github.com/AnimatedLEDStrip/Animat
 If you need to update the server with a new version, i.e. a development version, you can use the `./deploy.bash` script.
 The script packages the server on your computer, then copies it to any hosts you specify and restarts them.
 
-To specify which hosts to update, add `-I` flags for each host's IP or user@IP, i.e.:
+To specify which hosts to update, add `-H` flags for each host's IP or user@IP, i.e.:
 ```bash
-./deploy.bash -I 10.0.0.254 -I user2@10.0.0.253
+./deploy.bash -H 10.0.0.254 -H user2@10.0.0.253
 ```
 If no user is specified, `pi` is assumed as default.
 

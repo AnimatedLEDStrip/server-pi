@@ -9,7 +9,12 @@ MVN_SETTINGS_FILE=""
 while test $# -gt 0
 do
     case "$1" in
-        -I)
+        -h)
+            shift
+            echo "Usage: ./deploy.bash [-H IP | -H USER@IP]..."
+            exit
+        ;;
+        -H)
             shift
             if test $# -gt 0
             then
@@ -32,11 +37,6 @@ do
                 MVN_SETTINGS_FILE=$1
                 shift
             fi
-        ;;
-        -h)
-            shift
-            echo "Usage: ./deploy.bash [-I IP | -I USER@IP]..."
-            exit
         ;;
     esac
 done
