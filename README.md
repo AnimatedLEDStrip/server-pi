@@ -42,5 +42,5 @@ If no user is specified, `pi` is assumed as default.
 To specify a specific `settings.xml` file to use for `mvn`, use the `-s` flag:
 
 ```bash
-./deploy.bash -I 10.0.0.254 -I user2@10.0.0.253 -s ./settings.xml
+./deploy.bash -H 10.0.0.254 -H user2@10.0.0.253 -s ./settings.xml
 ```
