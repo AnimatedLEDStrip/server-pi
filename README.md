@@ -24,12 +24,12 @@ AnimatedLEDStrip uses SPI by default (GPIO pin 12, physical pin 32), so this sho
 (as long as you don't change the pin in the config file or with a command line flag).
 
 
-## Configuration
+## Configure
 The config file is located at `/usr/leds/led.config`.
 See the [AnimatedLEDStripServer wiki](https://github.com/AnimatedLEDStrip/AnimatedLEDStripServer/wiki/Configuration) for instructions on configuring the server.
 
 
-## Updating
+## Update
 If you need to update the server with a new version, i.e. a development version, you can use the `./deploy.bash` script.
 The script packages the server on your computer, then copies it to any hosts you specify and restarts them.
 
