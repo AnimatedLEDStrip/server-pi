@@ -59,28 +59,40 @@
       src: ansible/ledserver.service
       dest: /lib/systemd/system/ledserver.service
 
-  - name: Add ledserver.sh
+  - name: Add ledserver.bash
     copy:
-      src: ansible/ledserver.sh
-      dest: /usr/leds/ledserver.sh
+      src: ansible/ledserver.bash
+      dest: /usr/leds/ledserver.bash
       mode: '0777'
 
-  - name: Add ledconsole.sh
+  - name: Add ledconsole.bash
     copy:
-      src: ansible/ledconsole.sh
-      dest: /usr/leds/ledconsole.sh
+      src: ansible/ledconsole.bash
+      dest: /usr/leds/ledconsole.bash
+      mode: '0777'
+
+  - name: Add ledupdate.bash
+    copy:
+      src: ansible/ledupdate.bash
+      dest: /usr/leds/ledupdate.bash
       mode: '0777'
 
   - name: Install ledserver
     file:
-      src: /usr/leds/ledserver.sh
+      src: /usr/leds/ledserver.bash
       path: /usr/bin/ledserver
       state: link
 
   - name: Install ledconsole
     file:
-      src: /usr/leds/ledconsole.sh
+      src: /usr/leds/ledconsole.bash
       path: /usr/bin/ledconsole
+      state: link
+
+  - name: Install ledupdate
+    file:
+      src: /usr/leds/ledupdate.bash
+      path: /usr/bin/ledupdate
       state: link
 
 
