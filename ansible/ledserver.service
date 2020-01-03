@@ -3,7 +3,7 @@ Description=Run an AnimatedLEDStrip Server
 After=network-online.target
 
 [Service]
-ExecStart=java -jar /usr/leds/ledserver.jar -f /usr/leds/led.config
+ExecStart=java -jar /usr/local/leds/ledserver.jar -f /etc/leds/led.config
 
 [Install]
 WantedBy=multi-user.target

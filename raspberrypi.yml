@@ -12,89 +12,103 @@
       line: core_freq=250
 
 
-  - name: Make /usr/leds directory
-    file:
-      path: /usr/leds
-      state: directory
-      mode: '0777'
-
-
   - name: Install maven
     apt:
       name: maven
 
+  - name: Make /usr/local/src/animatedledstrip directory
+    file:
+      path: /usr/local/src/animatedledstrip
+      state: directory
+      mode: '0777'
+
   - name: Clone Pi Server
     git:
-      repo: https://github.com/AnimatedLEDStrip/AnimatedLEDStripServerExample.git
-      dest: AnimatedLEDStripServerExample
+      repo: https://github.com/AnimatedLEDStrip/AnimatedLEDStripPiServerExample.git
+      dest: /usr/local/src/animatedledstrip/AnimatedLEDStripPiServerExample
 
   - name: Clone Pi Device Library
     git:
       repo: https://github.com/AnimatedLEDStrip/AnimatedLEDStripPi.git
-      dest: AnimatedLEDStripPi
+      dest: /usr/local/src/animatedledstrip/AnimatedLEDStripPi
 
   - name: Install dependency jar into maven
-    shell: mvn install:install-file -Dfile=AnimatedLEDStripPi/src/main/resources/rpi-ws281x-java-2.0.0-SNAPSHOT.jar -DgroupId=com.github.mbelling -DartifactId=rpi-ws281x-java -Dversion=2.0.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
+    shell: mvn install:install-file -Dfile=/usr/local/src/animatedledstrip/AnimatedLEDStripPi/src/main/resources/rpi-ws281x-java-2.0.0-SNAPSHOT.jar -DgroupId=com.github.mbelling -DartifactId=rpi-ws281x-java -Dversion=2.0.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
 
-  - name: Package jar
+  - name: Package jar (this will take some time)
     shell: mvn package
     args:
-      chdir: AnimatedLEDStripServerExample
+      chdir: /usr/local/src/animatedledstrip/AnimatedLEDStripPiServerExample
 
+
+  - name: Create /usr/local/leds directory
+    file:
+      path: /usr/local/leds
+      state: directory
+      mode: '0777'
 
   - name: Copy jar
     copy:
-      src: AnimatedLEDStripServerExample/target/animatedledstrip-server-example-1.0.jar
-      dest: /usr/leds/ledserver.jar
+      src: /usr/local/src/animatedledstrip/AnimatedLEDStripPiServerExample/target/animatedledstrip-server-example-1.0.jar
+      dest: /usr/local/leds/ledserver.jar
+      mode: '0777'
+
+
+  - name: Create /etc/leds directory
+    file:
+      path: /etc/leds
+      state: directory
       mode: '0777'
 
   - name: Add led.config
     copy:
       src: ansible/led.config
-      dest: /usr/leds/led.config
+      dest: /etc/leds/led.config
       mode: '0777'
+
 
   - name: Add ledserver service
     copy:
       src: ansible/ledserver.service
       dest: /lib/systemd/system/ledserver.service
 
+
   - name: Add ledserver.bash
     copy:
       src: ansible/ledserver.bash
-      dest: /usr/leds/ledserver.bash
+      dest: /usr/local/leds/ledserver.bash
       mode: '0777'
 
   - name: Add ledconsole.bash
     copy:
       src: ansible/ledconsole.bash
-      dest: /usr/leds/ledconsole.bash
+      dest: /usr/local/leds/ledconsole.bash
       mode: '0777'
 
   - name: Add ledupdate.bash
     copy:
       src: ansible/ledupdate.bash
-      dest: /usr/leds/ledupdate.bash
+      dest: /usr/local/leds/ledupdate.bash
       mode: '0777'
+
 
   - name: Install ledserver
     file:
-      src: /usr/leds/ledserver.bash
+      src: /usr/local/leds/ledserver.bash
       path: /usr/bin/ledserver
       state: link
 
   - name: Install ledconsole
     file:
-      src: /usr/leds/ledconsole.bash
+      src: /usr/local/leds/ledconsole.bash
       path: /usr/bin/ledconsole
       state: link
 
   - name: Install ledupdate
     file:
-      src: /usr/leds/ledupdate.bash
+      src: /usr/local/leds/ledupdate.bash
       path: /usr/bin/ledupdate
       state: link
-
 
 
   - name: Enable ledserver

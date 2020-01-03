@@ -1,3 +1,3 @@
 #! /bin/sh
 
-sudo /usr/bin/java -jar /usr/leds/ledserver.jar "$@"
+sudo /usr/bin/java -jar /usr/local/leds/ledserver.jar "$@"
