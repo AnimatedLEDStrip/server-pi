@@ -58,7 +58,7 @@ else
         echo "${host}"
         if [[ ${host} != "" ]]
         then
-            scp ${DIR}/target/animatedledstrip-server-example-1.0.jar ${host}:/usr/leds/ledserver.jar
+            scp ${DIR}/target/animatedledstrip-server-example-1.0.jar ${host}:/usr/local/leds/ledserver.jar
             ssh ${host} -t "sudo reboot"
         fi
     done
