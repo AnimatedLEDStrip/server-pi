@@ -72,7 +72,17 @@ then
     ALS_VERSION="-Danimatedledstrip.version=${ALS_VERSION}"
 fi
 
+# shellcheck disable=SC2086
 mvn package ${MVN_SETTINGS_FILE} ${ALS_VERSION}
+
+# shellcheck disable=SC2181
+if [[ $? != 0 ]]
+then
+    echo "Maven build failed"
+    exit
+else
+    echo "Maven build successful, continuing to deployment..."
+fi
 
 if [[ ${IP_LIST} == "" ]]
 then
@@ -84,12 +94,12 @@ else
         echo "${host}"
         if [[ ${host} != "" ]]
         then
-            scp ${DIR}/target/animatedledstrip-server-example-1.0.jar ${host}:/usr/local/leds/ledserver.jar
+            scp "${DIR}"/target/animatedledstrip-server-example-1.0.jar "${host}":/usr/local/leds/ledserver.jar
             if [[ ${RESTART} == 1 ]]
             then
-                ssh ${host} -t "sudo reboot"
+                ssh "${host}" -t "sudo reboot"
             else
-                ssh ${host} -t "sudo systemctl restart ledserver"
+                ssh "${host}" -t "sudo systemctl restart ledserver"
             fi
         fi
     done

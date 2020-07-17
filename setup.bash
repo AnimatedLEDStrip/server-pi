@@ -2,11 +2,9 @@
 
 # Run the ansible-pull command on the remote device, preparing it to run LEDs
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 re_ip='^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$'
 re_ip_user='^.+@[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$'
 IP_LIST=""
-MVN_SETTINGS_FILE=""
 
 while test $# -gt 0
 do
@@ -46,7 +44,7 @@ else
         echo "${host}"
         if [[ ${host} != "" ]]
         then
-            ssh ${host} -t "sudo pip install ansible; ansible-pull -U https://github.com/AnimatedLEDStrip/AnimatedLEDStripPiServerExample.git"
+            ssh "${host}" -t "sudo pip install ansible; ansible-pull -U https://github.com/AnimatedLEDStrip/AnimatedLEDStripPiServerExample.git"
         fi
     done
 fi

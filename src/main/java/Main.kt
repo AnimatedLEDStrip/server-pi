@@ -1,5 +1,3 @@
-package animatedledstrip.server.example
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,6 +20,7 @@ package animatedledstrip.server.example
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.server.example
 
 import animatedledstrip.leds.AnimatedLEDStripPi
 import animatedledstrip.server.startServer
@@ -29,4 +28,3 @@ import animatedledstrip.server.startServer
 fun main(args: Array<String>) {
     startServer(args, AnimatedLEDStripPi::class)
 }
-
