@@ -1,4 +1,4 @@
-# AnimatedLEDStripServerExample
+# AnimatedLEDStrip Server for Raspberry Pi
 An example usage of the AnimatedLEDStripServer library with the AnimatedLEDStripPi device library.
 
 ## Install
@@ -8,7 +8,7 @@ A device running `ansible-pull` pulls a repository and then runs the configurati
 To install this server on a Raspberry Pi, run
 ```bash
 sudo pip install ansible
-ansible-pull -U https://github.com/AnimatedLEDStrip/AnimatedLEDStripServerExample.git
+ansible-pull -U https://github.com/AnimatedLEDStrip/server-pi.git
 ```
 
 This will build, package and install the server on your Pi and add it as a systemd service that runs on startup.
