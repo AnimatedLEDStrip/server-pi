@@ -5,14 +5,9 @@ cache:
   directories:
     - $HOME/.m2
 
-branches:
-  only:
-    - master
-    - /^travis.*/
-    - /^v.*/
-
 stages:
   - name: deploy
+    if: tag IS present
 
 jobs:
   include:
