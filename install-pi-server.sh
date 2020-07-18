@@ -34,10 +34,16 @@ then
   exit 1
 fi
 
+echo -n "Checking for java..."
+
 if ! command -v java
 then
-  echo "Please install java first"
-  exit 1
+  echo "not found"
+  echo -n "Installing java..."
+  apt-get install openjdk-11-jdk -yq
+  echo "done"
+else
+  echo "found"
 fi
 
 rm -rf /tmp/ledserver-download
