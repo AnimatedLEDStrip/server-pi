@@ -6,7 +6,7 @@
 
     <groupId>io.github.animatedledstrip</groupId>
     <artifactId>animatedledstrip-server-pi</artifactId>
-    <version>1.0</version>
+    <version>0.7</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>An AnimatedLEDStripServer Example for Raspberry Pis</description>

@@ -1,0 +1,36 @@
+---
+language: java
+
+cache:
+  directories:
+    - $HOME/.m2
+
+branches:
+  only:
+    - master
+    - /^travis.*/
+    - /^v.*/
+
+stages:
+  - name: deploy
+
+jobs:
+  include:
+    - stage: deploy
+      install: skip
+      script: skip
+      before_deploy:
+        - wget https://github.com/AnimatedLEDStrip/device-pi/src/main/resources/rpi-ws281x-java-2.0.0-SNAPSHOT.jar
+        - mvn install:install-file -Dfile=rpi-ws281x-java-2.0.0-SNAPSHOT.jar -DgroupId=com.github.mbelling -DartifactId=rpi-ws281x-java -Dversion=2.0.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
+        - VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2> /dev/null)
+      deploy:
+        - provider: script
+          script: mvn package --settings .maven.xml -B
+          on:
+            tags: true
+        - provider: releases
+          api_key: $GITHUB_TOKEN
+          file: target/animatedledstrip-server-pi-${VERSION}.jar
+          skip_cleanup: true
+          on:
+            tags: true
