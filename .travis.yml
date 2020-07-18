@@ -20,7 +20,7 @@ jobs:
         - VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2> /dev/null)
       deploy:
         - provider: script
-          script: mvn package --settings .maven.xml -B
+          script: mvn package -B
           on:
             tags: true
         - provider: releases
