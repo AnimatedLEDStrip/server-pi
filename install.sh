@@ -8,6 +8,7 @@ fi
 
 VERSION=$(curl -s https://api.github.com/repos/AnimatedLEDStrip/server-pi/releases/latest | grep --color="never" -P '"tag_name":' | cut -d '"' -f 4)
 
+rm -rf /tmp/ledserver-download
 mkdir /tmp/ledserver-download
 
 cd /tmp/ledserver-download
