@@ -10,14 +10,15 @@ VERSION=$(curl -s https://api.github.com/repos/AnimatedLEDStrip/server-pi/releas
 
 rm -rf /tmp/ledserver-download
 mkdir /tmp/ledserver-download
-
 cd /tmp/ledserver-download
+
 
 echo -n "Creating /usr/local/leds..."
 
 install -d /usr/local/leds
 
 echo "done"
+
 
 echo -n "Installing ledserver..."
 
@@ -34,6 +35,7 @@ chmod 755 /usr/local/leds/ledserver.bash
 ln -f -s /usr/local/leds/ledserver.bash /usr/bin/ledserver
 
 echo "done"
+
 
 echo -n "Installing led.config..."
 
@@ -57,6 +59,7 @@ systemctl enable ledserver
 systemctl daemon-reload
 
 echo "done"
+
 
 rm -rf /tmp/ledserver-download
 
