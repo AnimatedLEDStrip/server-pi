@@ -12,7 +12,7 @@ mkdir /tmp/ledserver-download
 
 cd /tmp/ledserver-download
 
-mkdir /usr/local/leds
+install -d /usr/local/leds
 
 wget https://github.com/AnimatedLEDStrip/server-pi/releases/download/${VERSION}/animatedledstrip-server-pi-${VERSION}.jar
 
@@ -26,7 +26,7 @@ chmod 755 /usr/local/leds/ledserver.bash
 
 ln -s /usr/local/leds/ledserver.bash /usr/bin/ledserver
 
-mkdir /etc/leds
+install -d /etc/leds
 
 wget https://raw.githubusercontent.com/AnimatedLEDStrip/server-pi/master/install/led.config
 
