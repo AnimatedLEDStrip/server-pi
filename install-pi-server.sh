@@ -26,22 +26,25 @@ then
   exit 1
 fi
 
+echo -n "Determining latest version..."
+
 VERSION=$(curl -s https://api.github.com/repos/AnimatedLEDStrip/server-pi/releases/latest | grep --color="never" -P '"tag_name":' | cut -d '"' -f 4)
 
 if [[ -z "$VERSION" ]]
 then
   echo "Could not determine latest version, aborting"
   exit 1
+else
+  echo "$VERSION"
 fi
 
 echo -n "Checking for java..."
 
-if ! command -v java
+if ! command -v java &> /dev/null
 then
   echo "not found"
-  echo -n "Installing java..."
-  apt-get install openjdk-11-jdk -qq
-  echo "done"
+  echo "Please install java"
+  exit 1
 else
   echo "found"
 fi
@@ -90,7 +93,7 @@ else
 fi
 
 
-echo -n "Installing led.config..."
+echo -n "Creating led.config..."
 
 wget -q https://raw.githubusercontent.com/AnimatedLEDStrip/server-pi/master/install/led.config
 
@@ -105,7 +108,7 @@ wget -q https://raw.githubusercontent.com/AnimatedLEDStrip/server-pi/master/inst
 
 install -m 644 ledserver.service /lib/systemd/system/ledserver.service
 
-systemctl enable ledserver
+systemctl enable ledserver &> /dev/null
 
 systemctl daemon-reload
 
