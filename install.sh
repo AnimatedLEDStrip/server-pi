@@ -12,9 +12,11 @@ mkdir /tmp/ledserver-download
 
 cd /tmp/ledserver-download
 
-echo "Creating /usr/local/leds"
+echo -n "Creating /usr/local/leds..."
 
 install -d /usr/local/leds
+
+echo "done"
 
 echo -n "Installing ledserver..."
 
@@ -28,7 +30,7 @@ install -m 755 ledserver.bash /usr/local/leds/ledserver.bash
 
 chmod 755 /usr/local/leds/ledserver.bash
 
-ln -s /usr/local/leds/ledserver.bash /usr/bin/ledserver
+ln -f -s /usr/local/leds/ledserver.bash /usr/bin/ledserver
 
 echo "done"
 
