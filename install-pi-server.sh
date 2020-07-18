@@ -40,7 +40,7 @@ if ! command -v java
 then
   echo "not found"
   echo -n "Installing java..."
-  apt-get install openjdk-11-jdk -yq
+  apt-get install openjdk-11-jdk -qq
   echo "done"
 else
   echo "found"
