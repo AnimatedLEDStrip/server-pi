@@ -12,13 +12,17 @@ mkdir /tmp/ledserver-download
 
 cd /tmp/ledserver-download
 
+echo "Creating /usr/local/leds"
+
 install -d /usr/local/leds
 
-wget https://github.com/AnimatedLEDStrip/server-pi/releases/download/${VERSION}/animatedledstrip-server-pi-${VERSION}.jar
+echo -n "Installing ledserver..."
+
+wget -q https://github.com/AnimatedLEDStrip/server-pi/releases/download/${VERSION}/animatedledstrip-server-pi-${VERSION}.jar
 
 mv animatedledstrip-server-pi-${VERSION}.jar /usr/local/leds/ledserver.jar
 
-wget https://raw.githubusercontent.com/AnimatedLEDStrip/server-pi/master/install/ledserver.bash
+wget -q https://raw.githubusercontent.com/AnimatedLEDStrip/server-pi/master/install/ledserver.bash
 
 install -m 755 ledserver.bash /usr/local/leds/ledserver.bash
 
@@ -26,13 +30,22 @@ chmod 755 /usr/local/leds/ledserver.bash
 
 ln -s /usr/local/leds/ledserver.bash /usr/bin/ledserver
 
+echo "done"
+
+echo -n "Installing led.config..."
+
 install -d /etc/leds
 
-wget https://raw.githubusercontent.com/AnimatedLEDStrip/server-pi/master/install/led.config
+wget -q https://raw.githubusercontent.com/AnimatedLEDStrip/server-pi/master/install/led.config
 
 install -m 644 led.config /etc/leds/led.config
 
-wget https://raw.githubusercontent.com/AnimatedLEDStrip/server-pi/master/install/ledserver.service
+echo "done"
+
+
+echo -n "Creating ledserver systemd service..."
+
+wget -q https://raw.githubusercontent.com/AnimatedLEDStrip/server-pi/master/install/ledserver.service
 
 install -m 644 ledserver.service /lib/systemd/system/ledserver.service
 
@@ -40,4 +53,8 @@ systemctl enable ledserver
 
 systemctl daemon-reload
 
+echo "done"
+
 rm -rf /tmp/ledserver-download
+
+echo "AnimatedLEDStrip LED Server for Raspberry Pi installed successfully"
