@@ -26,13 +26,13 @@ wget -q https://github.com/AnimatedLEDStrip/server-pi/releases/download/${VERSIO
 
 mv animatedledstrip-server-pi-${VERSION}.jar /usr/local/leds/ledserver.jar
 
-wget -q https://raw.githubusercontent.com/AnimatedLEDStrip/server-pi/master/install/ledserver.bash
+wget -q https://raw.githubusercontent.com/AnimatedLEDStrip/server-pi/master/install/ledserver.sh
 
-install -m 755 ledserver.bash /usr/local/leds/ledserver.bash
+install -m 755 ledserver.sh /usr/local/leds/ledserver.sh
 
-chmod 755 /usr/local/leds/ledserver.bash
+chmod 755 /usr/local/leds/ledserver.sh
 
-ln -f -s /usr/local/leds/ledserver.bash /usr/bin/ledserver
+ln -f -s /usr/local/leds/ledserver.sh /usr/bin/ledserver
 
 echo "done"
 

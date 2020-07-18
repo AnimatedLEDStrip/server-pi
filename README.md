@@ -2,16 +2,12 @@
 An example usage of the AnimatedLEDStripServer library with the AnimatedLEDStripPi device library.
 
 ## Install
-This repository supports installation using `ansible-pull`.
-A device running `ansible-pull` pulls a repository and then runs the configuration tasks on itself.
-
 To install this server on a Raspberry Pi, run
 ```bash
-sudo pip install ansible
-ansible-pull -U https://github.com/AnimatedLEDStrip/server-pi.git
+curl -s https://animatedledstrip.github.io/install/install-pi-server.sh | sudo bash
 ```
 
-This will build, package and install the server on your Pi and add it as a systemd service that runs on startup.
+This will install the server on your Pi and add it as a systemd service that runs on startup.
 
 ### Note about Raspberry Pi 3B and 3B+
 On the 3B and 3B+, the Pi's GPU does not initialize fully if there is no monitor connected on boot.
@@ -25,8 +21,8 @@ AnimatedLEDStrip uses SPI by default (GPIO pin 12, physical pin 32), so this sho
 
 
 ## Configure
-The config file is located at `/usr/leds/led.config`.
-See the [AnimatedLEDStripServer wiki](https://github.com/AnimatedLEDStrip/AnimatedLEDStripServer/wiki/Configuration) for instructions on configuring the server.
+The config file is located at `/etc/leds/led.config`.
+See the [AnimatedLEDStripServer wiki](https://github.com/AnimatedLEDStrip/server/wiki/Configuration) for instructions on configuring the server.
 
 
 ## Update

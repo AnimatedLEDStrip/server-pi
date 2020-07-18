@@ -36,10 +36,9 @@ jobs:
       before_deploy:
         - git clone https://github.com/AnimatedLEDStrip/animatedledstrip.github.io.git
         - cd animatedledstrip.github.io
-        - mkdir install
         - cp ../install-pi-server.sh install/install-pi-server.sh
         - git add install/install-pi-server.sh
-        - git commit -m "Update install-pi-server.sh"
+        - git commit --allow-empty -m "Update install-pi-server.sh"
       deploy:
         - provider: script
           script:  git push -u https://maxnz:$GITHUB_TOKEN@github.com/AnimatedLEDStrip/animatedledstrip.github.io.git master
