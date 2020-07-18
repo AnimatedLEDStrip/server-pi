@@ -15,7 +15,7 @@ jobs:
       install: skip
       script: skip
       before_deploy:
-        - wget https://github.com/AnimatedLEDStrip/device-pi/src/main/resources/rpi-ws281x-java-2.0.0-SNAPSHOT.jar
+        - wget https://github.com/AnimatedLEDStrip/device-pi/raw/master/src/main/resources/rpi-ws281x-java-2.0.0-SNAPSHOT.jar
         - mvn install:install-file -Dfile=rpi-ws281x-java-2.0.0-SNAPSHOT.jar -DgroupId=com.github.mbelling -DartifactId=rpi-ws281x-java -Dversion=2.0.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
         - VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2> /dev/null)
       deploy:
