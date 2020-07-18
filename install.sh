@@ -6,7 +6,7 @@ then
   exit 1
 fi
 
-VERSION=$(curl -s https://api.github.com/repos/maxnz/csinparallel-gen/releases/latest | grep --color="never" -oP '"tag_name":"\K(.*)(?=")')
+VERSION=$(curl -s https://api.github.com/repos/AnimatedLEDStrip/server-pi/releases/latest | grep --color="never" -oP '"tag_name":"\K(.*)(?=")')
 
 mkdir /tmp/ledserver-download
 
