@@ -6,7 +6,7 @@ then
   exit 1
 fi
 
-VERSION=$(curl -s https://api.github.com/repos/AnimatedLEDStrip/server-pi/releases/latest | grep --color="never" -oP '"tag_name":"\K(.*)(?=")')
+VERSION=$(curl -s https://api.github.com/repos/AnimatedLEDStrip/server-pi/releases/latest | grep --color="never" -P '"tag_name":' | cut -d '"' -f 4)
 
 mkdir /tmp/ledserver-download
 
