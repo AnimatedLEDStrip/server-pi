@@ -26,6 +26,7 @@ then
   exit 1
 fi
 
+
 echo -n "Determining latest version..."
 
 VERSION=$(curl -s https://api.github.com/repos/AnimatedLEDStrip/server-pi/releases/latest | grep --color="never" -P '"tag_name":' | cut -d '"' -f 4)
@@ -38,6 +39,7 @@ else
   echo "$VERSION"
 fi
 
+
 echo -n "Checking for java..."
 
 if ! command -v java &> /dev/null
@@ -48,6 +50,7 @@ then
 else
   echo "found"
 fi
+
 
 rm -rf /tmp/ledserver-download
 mkdir /tmp/ledserver-download
