@@ -65,9 +65,14 @@ else
 fi
 
 
-echo -n "Installing ledserver..."
+echo -n "Downloading ledserver..."
 
 wget -q "https://github.com/AnimatedLEDStrip/server-pi/releases/download/${VERSION}/animatedledstrip-server-pi-${VERSION}.jar"
+
+echo "done"
+
+
+echo -n "Installing ledserver..."
 
 mv "animatedledstrip-server-pi-${VERSION}.jar" /usr/local/leds/ledserver.jar
 
