@@ -10,7 +10,7 @@ curl -s https://animatedledstrip.github.io/install/install-pi-server.sh | sudo b
 This will install the server on your Pi and add it as a systemd service that runs on startup.
 
 ## Physical Setup
-See the [Adafruit NeoPixel Überguide](https://learn.adafruit.com/adafruit-neopixel-uberguide) for a good introduction to
+See the [Adafruit NeoPixel Überguide](https://learn.adafruit.com/adafruit-neopixel-uberguide) for a good introduction to ws281x LEDs, specifically their NeoPixels
 
 ### Data
 With the default configuration, the data should be connected to GPIO 12 (physical pin 32).
