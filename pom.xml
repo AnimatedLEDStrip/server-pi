@@ -8,16 +8,16 @@
     <artifactId>animatedledstrip-server-pi</artifactId>
     <version>0.7</version>
 
-    <name>${project.groupId}:${project.artifactId}</name>
-    <description>An AnimatedLEDStripServer Example for Raspberry Pis</description>
-    <url>https://github.com/AnimatedLEDStrip/AnimatedLEDStripServerExample</url>
+    <name>io.github.animatedledstrip:animatedledstrip-server-pi</name>
+    <description>An AnimatedLEDStrip server for Raspberry Pis</description>
+    <url>https://github.com/AnimatedLEDStrip/server-pi</url>
 
     <developers>
         <developer>
             <name>Max Narvaez</name>
             <email>mnmax.narvaez3@gmail.com</email>
             <organization>AnimatedLEDStrip</organization>
-            <organizationUrl>https://github.com/AnimatedLEDStrip</organizationUrl>
+            <organizationUrl>https://animatedledstrip.github.io</organizationUrl>
         </developer>
     </developers>
 
@@ -71,7 +71,6 @@
 
     <build>
         <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
-<!--        <testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>-->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -122,6 +121,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>
