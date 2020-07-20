@@ -9,15 +9,25 @@ curl -s https://animatedledstrip.github.io/install/install-pi-server.sh | sudo b
 
 This will install the server on your Pi and add it as a systemd service that runs on startup.
 
-### Note about Raspberry Pi 3B and 3B+
-On the 3B and 3B+, the Pi's GPU does not initialize fully if there is no monitor connected on boot.
-If using PWM to control the LEDs, they will not work.
-The workaround is to use a "dummy plug" that pretends to be a monitor and tricks the Pi into initializing the GPU.
-These are cheap and can be purchased from Amazon.
-This has not been tested on the Raspberry Pi 4B yet.
+## Physical Setup
+See the [Adafruit NeoPixel Überguide](https://learn.adafruit.com/adafruit-neopixel-uberguide) for a good introduction to ws281x LEDs, specifically their NeoPixels.
 
-AnimatedLEDStrip uses SPI by default (GPIO pin 12, physical pin 32), so this shouldn't be an issue
-(as long as you don't change the pin in the config file or with a command line flag).
+### Data
+With the default configuration, the data should be connected to GPIO 12 (physical pin 32).
+If you set the pin to a different number, check a pin diagram for the Pi to check what physical pin to connect to.
+Check the [rpi_ws281x](https://github.com/jgarff/rpi_ws281x) library for which pins are supported, which protocols they correspond to, and other notes about the protocols.
+
+### Ground
+The ground should be connected to one of the ground pins on the Pi (physical pins 6, 9, 14, 20, 25, 30, 34 and 39).
+The ground should also be connected to the ground of the power supply.
+
+### Power
+The [Adafruit NeoPixel Überguide](https://learn.adafruit.com/adafruit-neopixel-uberguide/powering-neopixels) has good tips for powering the LEDs.
+If your strip is short enough, may be able to connect the power to the 5V power on the Pi (physical pins 2 and 4).
+
+**Be careful doing this.**
+
+To borrow words from the [rpi_ws281x](https://github.com/jgarff/rpi_ws281x) library: *Know what you're doing with the hardware and electricity. I take no reponsibility for damage, harm, or mistakes.*
 
 
 ## Configure
