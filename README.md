@@ -1,5 +1,5 @@
 # AnimatedLEDStrip Server for Raspberry Pi
-An example usage of the AnimatedLEDStripServer library with the AnimatedLEDStripPi device library.
+An example usage of the [AnimatedLEDStrip server library](https://github.com/AnimatedLEDStrip/server) with the [AnimatedLEDStrip Raspberry Pi device library](https://github.com/AnimatedLEDStrip/server).
 
 ## Install
 To install this server on a Raspberry Pi, run
@@ -32,7 +32,7 @@ To borrow words from the [rpi_ws281x](https://github.com/jgarff/rpi_ws281x) libr
 
 ## Configure
 The config file is located at `/etc/leds/led.config`.
-See the [AnimatedLEDStripServer wiki](https://github.com/AnimatedLEDStrip/server/wiki/Configuration) for instructions on configuring the server.
+See the [AnimatedLEDStrip server wiki](https://github.com/AnimatedLEDStrip/server/wiki/Configuration) for instructions on configuring the server.
 
 
 ## Update
