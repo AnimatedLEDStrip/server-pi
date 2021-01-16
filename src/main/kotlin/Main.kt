@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2019 AnimatedLEDStrip
+ *  Copyright (c) 2019-2020 AnimatedLEDStrip
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +22,9 @@
 
 package animatedledstrip.server.example
 
-import animatedledstrip.leds.AnimatedLEDStripPi
+import animatedledstrip.leds.WS281xCompat
 import animatedledstrip.server.startServer
 
 fun main(args: Array<String>) {
-    startServer(args, AnimatedLEDStripPi::class)
+    startServer(args, WS281xCompat::class)
 }

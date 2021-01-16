@@ -23,11 +23,14 @@ The ground should also be connected to the ground of the power supply.
 
 ### Power
 The [Adafruit NeoPixel Überguide](https://learn.adafruit.com/adafruit-neopixel-uberguide/powering-neopixels) has good tips for powering the LEDs.
-If your strip is short enough, may be able to connect the power to the 5V power on the Pi (physical pins 2 and 4).
 
-**Be careful doing this.**
+**Be careful when working with electricity**
 
 To borrow words from the [rpi_ws281x](https://github.com/jgarff/rpi_ws281x) library: *Know what you're doing with the hardware and electricity. I take no reponsibility for damage, harm, or mistakes.*
+
+If your strip is short enough, you may be able to connect the power to the 5V power on the Pi (physical pins 2 and 4).
+You should do some math to determine what power supply to use, *especially if you plan to power them off the Pi*.
+**[Read this first](https://learn.adafruit.com/neopixels-on-raspberry-pi/raspberry-pi-wiring#powering-neopixels-from-raspberry-pi-without-level-shifting-3006456-7)** if you plan to do this.
 
 
 ## Configure

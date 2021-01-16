@@ -69,19 +69,22 @@ fi
 
 if [[ ${ALS_VERSION} != "" ]]
 then
-    ALS_VERSION="-Danimatedledstrip.version=${ALS_VERSION}"
+    ALS_VERSION="-PanimatedledstripVersion=${ALS_VERSION}"
+else
+    echo "ERROR"
+    exit 1
 fi
 
 # shellcheck disable=SC2086
-mvn package ${MVN_SETTINGS_FILE} ${ALS_VERSION}
+./gradlew shadowJar ${ALS_VERSION}
 
 # shellcheck disable=SC2181
 if [[ $? != 0 ]]
 then
-    echo "Maven build failed"
+    echo "Gradle build failed"
     exit
 else
-    echo "Maven build successful, continuing to deployment..."
+    echo "Gradle build successful, continuing to deployment..."
 fi
 
 if [[ ${IP_LIST} == "" ]]
@@ -94,7 +97,8 @@ else
         echo "${host}"
         if [[ ${host} != "" ]]
         then
-            scp "${DIR}"/target/animatedledstrip-server-example-1.0.jar "${host}":/usr/local/leds/ledserver.jar
+            scp "${DIR}"/build/libs/animatedledstrip-server-pi-1.0.jar "${host}":ledserver.jar
+            ssh "${host}" -t "sudo cp ledserver.jar /usr/local/leds/ledserver.jar"
             if [[ ${RESTART} == 1 ]]
             then
                 ssh "${host}" -t "sudo reboot"
