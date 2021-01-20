@@ -1,9 +1,13 @@
 ---
 language: java
 
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-    - $HOME/.m2
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
 
 stages:
   - name: deploy
@@ -17,31 +21,34 @@ jobs:
       before_deploy:
         - wget https://github.com/AnimatedLEDStrip/device-pi/raw/master/src/main/resources/rpi-ws281x-java-2.0.0-SNAPSHOT.jar
         - mvn install:install-file -Dfile=rpi-ws281x-java-2.0.0-SNAPSHOT.jar -DgroupId=com.github.mbelling -DartifactId=rpi-ws281x-java -Dversion=2.0.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
-        - VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2> /dev/null)
+        - "VERSION=$(./gradlew properties | grep '^version:' | sed 's/version: //g')"
+        - PI_VERSION=$(curl -s https://api.github.com/repos/AnimatedLEDStrip/device-pi/releases/latest | grep --color="never" -P ''tag_name":' | cut -d '"' -f 4)
+        - SERVER_VERSION=$(curl -s https://api.github.com/repos/AnimatedLEDStrip/server/releases/latest | grep --color="never" -P ''tag_name":' | cut -d '"' -f 4)
       deploy:
         - provider: script
-          script: mvn package -B
+          script: ./gradlew shadowJar -PanimatedledstripServerVersion=$SERVER_VERSION -PanimatedledstripPiVersion=$PI_VERSION
           on:
             tags: true
         - provider: releases
           api_key: $GITHUB_TOKEN
-          file: target/animatedledstrip-server-pi-${VERSION}.jar
+          file: build/libs/animatedledstrip-server-pi-${VERSION}.jar
           skip_cleanup: true
           overwrite: true
           on:
             tags: true
+
     - stage: deploy
       install: skip
       script: skip
       before_deploy:
         - git clone https://github.com/AnimatedLEDStrip/animatedledstrip.github.io.git
         - cd animatedledstrip.github.io
-        - cp ../install-pi-server.sh install/install-pi-server.sh
-        - git add install/install-pi-server.sh
-        - git commit --allow-empty -m "Update install-pi-server.sh"
+        - cp ../install-pi-server.sh install/install-pi-server.bash
+        - git add install/install-pi-server.bash
+        - git commit --allow-empty -m "Update install-pi-server.bash"
       deploy:
         - provider: script
-          script:  git push -u https://maxnz:$GITHUB_TOKEN@github.com/AnimatedLEDStrip/animatedledstrip.github.io.git master
+          script: git push -u https://maxnz:$GITHUB_TOKEN@github.com/AnimatedLEDStrip/animatedledstrip.github.io.git master
           skip_cleanup: true
           on:
             tags: true

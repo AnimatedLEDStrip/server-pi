@@ -69,14 +69,14 @@ fi
 
 if [[ ${ALS_VERSION} != "" ]]
 then
-    ALS_VERSION="-PanimatedledstripVersion=${ALS_VERSION}"
+    ALS_VERSION="-PanimatedledstripPiVersion=${ALS_VERSION} -PanimatedledstripServerVersion=${ALS_VERSION}"
 else
     echo "ERROR"
     exit 1
 fi
 
 # shellcheck disable=SC2086
-./gradlew shadowJar ${ALS_VERSION}
+./gradlew shadowJar ${ALS_VERSION} --console plain
 
 # shellcheck disable=SC2181
 if [[ $? != 0 ]]

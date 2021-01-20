@@ -17,14 +17,17 @@ repositories {
 
 group = "io.github.animatedledstrip"
 version = "1.0"
-description = "A library for creating an AnimatedLEDStrip server"
+description = "An AnimatedLEDStrip server for Raspberry Pis"
 
-val animatedledstripVersion: String by project
+val animatedledstripServerVersion: String? by project
+val animatedledstripPiVersion: String? by project
+val alsServerVersion = animatedledstripServerVersion ?: "1.0.0-pre2-SNAPSHOT"
+val alsPiVersion = animatedledstripPiVersion ?: "1.0.0-pre2-SNAPSHOT"
 
 sourceSets.main {
     dependencies {
-        implementation("io.github.animatedledstrip:animatedledstrip-pi:$animatedledstripVersion")
-        implementation("io.github.animatedledstrip:animatedledstrip-server-jvm:$animatedledstripVersion")
+        implementation("io.github.animatedledstrip:animatedledstrip-pi:$alsPiVersion")
+        implementation("io.github.animatedledstrip:animatedledstrip-server-jvm:$alsServerVersion")
     }
 
     java.srcDirs("src/main/kotlin")
