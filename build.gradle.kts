@@ -21,8 +21,8 @@ description = "An AnimatedLEDStrip server for Raspberry Pis"
 
 val animatedledstripServerVersion: String? by project
 val animatedledstripPiVersion: String? by project
-val alsServerVersion = animatedledstripServerVersion ?: "1.0.0-pre2-SNAPSHOT"
-val alsPiVersion = animatedledstripPiVersion ?: "1.0.0-pre2-SNAPSHOT"
+val alsServerVersion = animatedledstripServerVersion ?: "1.0.0-pre3-SNAPSHOT"
+val alsPiVersion = animatedledstripPiVersion ?: "1.0.0-pre3-SNAPSHOT"
 
 sourceSets.main {
     dependencies {

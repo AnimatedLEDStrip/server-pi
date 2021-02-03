@@ -29,14 +29,23 @@ fi
 
 echo -n "Determining latest version..."
 
-VERSION=$(curl -s https://api.github.com/repos/AnimatedLEDStrip/server-pi/releases/latest | grep --color="never" -P '"tag_name":' | cut -d '"' -f 4)
+PI_VERSION=$(curl -s https://api.github.com/repos/AnimatedLEDStrip/device-pi/releases/latest | grep --color="never" -P '"tag_name":' | cut -d '"' -f 4)
+SERVER_VERSION=$(curl -s https://api.github.com/repos/AnimatedLEDStrip/server/releases/latest | grep --color="never" -P '"tag_name":' | cut -d '"' -f 4)
 
-if [[ -z "$VERSION" ]]
+if [[ -z "$PI_VERSION" ]]
 then
-  echo "Could not determine latest version, aborting"
+  echo "Could not determine latest version of Raspberry Pi device library, aborting"
   exit 1
 else
-  echo "$VERSION"
+  echo "$PI_VERSION"
+fi
+
+if [[ -z "$SERVER_VERSION" ]]
+then
+  echo "Could not determine latest version of AnimatedLEDStrip server library, aborting"
+  exit 1
+else
+  echo "$SERVER_VERSION"
 fi
 
 
@@ -68,16 +77,34 @@ else
 fi
 
 
-echo -n "Downloading ledserver..."
+echo -n "Building ledserver..."
 
-wget -q "https://github.com/AnimatedLEDStrip/server-pi/releases/download/${VERSION}/animatedledstrip-server-pi-${VERSION}.jar"
+git clone https://github.com/AnimatedLEDStrip/server-pi.git
 
-echo "done"
+cd server-pi
+
+./gradlew shadowJar "-PanimatedledstripPiVersion=${PI_VERSION}" "-PanimatedledstripServerVersion=${SERVER_VERSION}" --console plain
+
+# shellcheck disable=SC2181
+if [[ $? != 0 ]]
+then
+    echo "Gradle build failed"
+    exit 1
+else
+    echo "Gradle build successful, continuing with installation..."
+fi
+
+
+echo -n "Determining Pi server version..."
+
+PI_SERVER_VERSION=$(./gradlew properties | grep '^version:' | sed 's/version: //g')
+
+echo "$PI_SERVER_VERSION"
 
 
 echo -n "Installing ledserver..."
 
-mv "animatedledstrip-server-pi-${VERSION}.jar" /usr/local/leds/ledserver.jar
+mv "build/libs/animatedledstrip-server-pi-${PI_SERVER_VERSION}.jar" /usr/local/leds/ledserver.jar
 
 wget -q https://raw.githubusercontent.com/AnimatedLEDStrip/server-pi/master/install/ledserver.sh
 

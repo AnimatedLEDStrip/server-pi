@@ -70,9 +70,9 @@ fi
 if [[ ${ALS_VERSION} != "" ]]
 then
     ALS_VERSION="-PanimatedledstripPiVersion=${ALS_VERSION} -PanimatedledstripServerVersion=${ALS_VERSION}"
-else
-    echo "ERROR"
-    exit 1
+# else
+#    echo "ERROR"
+#    exit 1
 fi
 
 # shellcheck disable=SC2086

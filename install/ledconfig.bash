@@ -37,10 +37,6 @@ echo -n "Pin [12]: "
 read INPUT
 echo "pin=${INPUT:-"12"}" >> .tmpledconfig
 
-echo -n "Ports [5 6]: "
-read INPUT
-echo "ports=${INPUT:-"5 6"}" >> .tmpledconfig
-
 echo -n "Render Delay (ms) [10]: "
 read INPUT
 echo "render-delay=${INPUT:-"10"}" >> .tmpledconfig
