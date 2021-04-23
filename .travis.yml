@@ -19,20 +19,17 @@ jobs:
       install: skip
       script: skip
       before_deploy:
-        - wget https://github.com/AnimatedLEDStrip/device-pi/raw/master/src/main/resources/rpi-ws281x-java-2.0.0-SNAPSHOT.jar
-        - mvn install:install-file -Dfile=rpi-ws281x-java-2.0.0-SNAPSHOT.jar -DgroupId=com.github.mbelling -DartifactId=rpi-ws281x-java -Dversion=2.0.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
-        - "VERSION=$(./gradlew properties | grep '^version:' | sed 's/version: //g')"
-        - PI_VERSION=$(curl -s https://api.github.com/repos/AnimatedLEDStrip/device-pi/releases/latest | grep --color="never" -P '"tag_name":' | cut -d '"' -f 4)
+        - mvn install:install-file -Dfile=src/main/resources/rpi-ws281x-java-2.0.0-SNAPSHOT.jar -DgroupId=com.github.mbelling -DartifactId=rpi-ws281x-java -Dversion=2.0.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
         - SERVER_VERSION=$(curl -s https://api.github.com/repos/AnimatedLEDStrip/server/releases/latest | grep --color="never" -P '"tag_name":' | cut -d '"' -f 4)
-        - "echo -e \"animatedledstrip-pi: $PI_VERSION\nanimatedledstrip-server-jvm: $SERVER_VERSION\""
+        - "echo animatedledstrip-server-jvm: $SERVER_VERSION"
       deploy:
         - provider: script
-          script: ./gradlew shadowJar -PanimatedledstripServerVersion=$SERVER_VERSION -PanimatedledstripPiVersion=$PI_VERSION
+          script: ./gradlew shadowJar -PanimatedledstripServerVersion=$SERVER_VERSION && mv build/libs/animatedledstrip-server-pi-1.0-all.jar build/libs/animatedledstrip-server-pi-${SERVER_VERSION}.jar
           on:
             tags: true
         - provider: releases
           api_key: $GITHUB_TOKEN
-          file: build/libs/animatedledstrip-server-pi-${VERSION}.jar
+          file: build/libs/animatedledstrip-server-pi-${SERVER_VERSION}.jar
           skip_cleanup: true
           overwrite: true
           on:

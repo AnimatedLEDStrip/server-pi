@@ -1,5 +1,5 @@
 # AnimatedLEDStrip Server for Raspberry Pi
-An example usage of the [AnimatedLEDStrip server library](https://github.com/AnimatedLEDStrip/server) with the [AnimatedLEDStrip Raspberry Pi device library](https://github.com/AnimatedLEDStrip/server).
+A server for the Raspberry Pi created with the [AnimatedLEDStrip server library](https://github.com/AnimatedLEDStrip/server) and [rpi-ws281x-java](https://github.com/rpi-ws281x/rpi-ws281x-java).
 
 ## Install
 To install this server on a Raspberry Pi, run

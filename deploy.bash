@@ -69,7 +69,7 @@ fi
 
 if [[ ${ALS_VERSION} != "" ]]
 then
-    ALS_VERSION="-PanimatedledstripPiVersion=${ALS_VERSION} -PanimatedledstripServerVersion=${ALS_VERSION}"
+    ALS_VERSION="-PanimatedledstripServerVersion=${ALS_VERSION}"
 # else
 #    echo "ERROR"
 #    exit 1
@@ -77,6 +77,8 @@ fi
 
 # shellcheck disable=SC2086
 ./gradlew shadowJar ${ALS_VERSION} --console plain
+
+mv build/libs/animatedledstrip-server-pi-1.0-all.jar build/libs/animatedledstrip-server-pi-1.0.jar
 
 # shellcheck disable=SC2181
 if [[ $? != 0 ]]

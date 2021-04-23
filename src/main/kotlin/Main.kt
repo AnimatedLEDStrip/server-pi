@@ -22,7 +22,6 @@
 
 package animatedledstrip.server.example
 
-import animatedledstrip.leds.WS281xCompat
 import animatedledstrip.server.startServer
 
 fun main(args: Array<String>) {

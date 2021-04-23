@@ -20,91 +20,73 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 
-if [ "$EUID" -ne 0 ]
-then
-  echo "Please run as root"
-  exit 1
+if [ "$EUID" -ne 0 ]; then
+    echo "Please run as root"
+    exit 1
 fi
-
 
 echo -n "Determining latest version..."
 
-PI_VERSION=$(curl -s https://api.github.com/repos/AnimatedLEDStrip/device-pi/releases/latest | grep --color="never" -P '"tag_name":' | cut -d '"' -f 4)
-SERVER_VERSION=$(curl -s https://api.github.com/repos/AnimatedLEDStrip/server/releases/latest | grep --color="never" -P '"tag_name":' | cut -d '"' -f 4)
+PI_SERVER_VERSION=$(curl -s https://api.github.com/repos/AnimatedLEDStrip/server-pi/releases/latest | grep --color="never" -P '"tag_name":' | cut -d '"' -f 4)
 
-if [[ -z "$PI_VERSION" ]]
-then
-  echo "Could not determine latest version of Raspberry Pi device library, aborting"
-  exit 1
+if [[ -z "$PI_SERVER_VERSION" ]]; then
+    echo "Could not determine latest version of AnimatedLEDStrip Pi server library, aborting"
+    exit 1
 else
-  echo "$PI_VERSION"
+    echo "$PI_SERVER_VERSION"
 fi
-
-if [[ -z "$SERVER_VERSION" ]]
-then
-  echo "Could not determine latest version of AnimatedLEDStrip server library, aborting"
-  exit 1
-else
-  echo "$SERVER_VERSION"
-fi
-
 
 echo -n "Checking for java..."
 
-if ! command -v java &> /dev/null
-then
-  echo "not found"
-  echo "Please install java"
-  exit 1
+if ! command -v java &>/dev/null; then
+    echo "not found"
+    echo "Please install java"
+    exit 1
 else
-  echo "found"
+    echo "found"
 fi
-
 
 rm -rf /tmp/ledserver-download
 mkdir /tmp/ledserver-download
-cd /tmp/ledserver-download
-
+cd /tmp/ledserver-download || exit 1
 
 echo -n "Creating /usr/local/leds..."
 
-if [[ -d /usr/local/leds ]]
-then
-  echo "exists"
+if [[ -d /usr/local/leds ]]; then
+    echo "exists"
 else
-  install -d /usr/local/leds
-  echo "done"
+    install -d /usr/local/leds
+    echo "done"
 fi
 
+#echo -n "Building ledserver..."
+#
+#git clone https://github.com/AnimatedLEDStrip/server-pi.git
+#
+#cd server-pi || exit 1
+#
+#./gradlew shadowJar "-PanimatedledstripServerVersion=${SERVER_VERSION}" --console plain
+#
+## shellcheck disable=SC2181
+#if [[ $? != 0 ]]
+#then
+#    echo "Gradle build failed"
+#    exit 1
+#else
+#    echo "Gradle build successful, continuing with installation..."
+#fi
 
-echo -n "Building ledserver..."
-
-git clone https://github.com/AnimatedLEDStrip/server-pi.git
-
-cd server-pi
-
-./gradlew shadowJar "-PanimatedledstripPiVersion=${PI_VERSION}" "-PanimatedledstripServerVersion=${SERVER_VERSION}" --console plain
-
-# shellcheck disable=SC2181
-if [[ $? != 0 ]]
-then
-    echo "Gradle build failed"
-    exit 1
-else
-    echo "Gradle build successful, continuing with installation..."
-fi
-
-
-echo -n "Determining Pi server version..."
-
-PI_SERVER_VERSION=$(./gradlew properties | grep '^version:' | sed 's/version: //g')
-
-echo "$PI_SERVER_VERSION"
-
+#echo -n "Determining Pi server version..."
+#
+#PI_SERVER_VERSION=$(./gradlew properties | grep '^version:' | sed 's/version: //g')
+#
+#echo "$PI_SERVER_VERSION"
 
 echo -n "Installing ledserver..."
 
-mv "build/libs/animatedledstrip-server-pi-${PI_SERVER_VERSION}.jar" /usr/local/leds/ledserver.jar
+wget "https://github.com/AnimatedLEDStrip/server-pi/releases/download/${PI_SERVER_VERSION}/animatedledstrip-server-pi-${PI_SERVER_VERSION}.jar"
+
+install -m 755 "animatedledstrip-server-pi-${PI_SERVER_VERSION}.jar" /usr/local/leds/ledserver.jar
 
 wget -q https://raw.githubusercontent.com/AnimatedLEDStrip/server-pi/master/install/ledserver.sh
 
@@ -116,15 +98,13 @@ ln -f -s /usr/local/leds/ledserver.sh /usr/bin/ledserver
 
 echo "done"
 
-
 echo -n "Creating /etc/leds..."
 
-if [[ -d /etc/leds ]]
-then
-  echo "exists"
+if [[ -d /etc/leds ]]; then
+    echo "exists"
 else
-  install -d /etc/leds
-  echo "done"
+    install -d /etc/leds
+    echo "done"
 fi
 
 echo -n "Downloading config script..."
@@ -145,19 +125,17 @@ echo "Configuring server..."
 
 ledconfig
 
-
 echo -n "Creating ledserver systemd service..."
 
 wget -q https://raw.githubusercontent.com/AnimatedLEDStrip/server-pi/master/install/ledserver.service
 
 install -m 644 ledserver.service /etc/systemd/system/ledserver.service
 
-systemctl enable ledserver &> /dev/null
+systemctl enable ledserver &>/dev/null
 
 systemctl daemon-reload
 
 echo "done"
-
 
 rm -rf /tmp/ledserver-download
 
