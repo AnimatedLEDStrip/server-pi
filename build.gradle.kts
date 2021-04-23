@@ -28,6 +28,7 @@ sourceSets.main {
     dependencies {
         implementation("io.github.animatedledstrip:animatedledstrip-pi:$alsPiVersion")
         implementation("io.github.animatedledstrip:animatedledstrip-server-jvm:$alsServerVersion")
+        implementation("com.github.mbelling:rpi-ws281x-java:2.0.0-SNAPSHOT")
     }
 
     java.srcDirs("src/main/kotlin")
