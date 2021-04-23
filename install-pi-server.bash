@@ -150,7 +150,7 @@ echo -n "Creating ledserver systemd service..."
 
 wget -q https://raw.githubusercontent.com/AnimatedLEDStrip/server-pi/master/install/ledserver.service
 
-install -m 644 ledserver.service /lib/systemd/system/ledserver.service
+install -m 644 ledserver.service /etc/systemd/system/ledserver.service
 
 systemctl enable ledserver &> /dev/null
 

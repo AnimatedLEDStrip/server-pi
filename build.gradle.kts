@@ -6,7 +6,7 @@ tasks.wrapper {
 
 plugins {
     kotlin("jvm") version "1.4.21"
-    id("com.github.johnrengelman.shadow") version "2.0.4"
+    id("com.github.johnrengelman.shadow") version "6.1.0"
 }
 
 repositories {
@@ -21,8 +21,8 @@ description = "An AnimatedLEDStrip server for Raspberry Pis"
 
 val animatedledstripServerVersion: String? by project
 val animatedledstripPiVersion: String? by project
-val alsServerVersion = animatedledstripServerVersion ?: "1.0.0-pre3-SNAPSHOT"
-val alsPiVersion = animatedledstripPiVersion ?: "1.0.0-pre3-SNAPSHOT"
+val alsServerVersion = animatedledstripServerVersion ?: "1.0.1"
+val alsPiVersion = animatedledstripPiVersion ?: "1.0.1"
 
 sourceSets.main {
     dependencies {
