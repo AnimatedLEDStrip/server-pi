@@ -1,16 +1,16 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 tasks.wrapper {
-    gradleVersion = "6.7.1"
+    gradleVersion = "7.4.2"
 }
 
 plugins {
-    kotlin("jvm") version "1.4.21"
+    kotlin("jvm") version "1.7.20"
     id("com.github.johnrengelman.shadow") version "6.1.0"
 }
 
 repositories {
-    jcenter()
     mavenCentral()
     mavenLocal()
 }
@@ -21,7 +21,7 @@ description = "An AnimatedLEDStrip server for Raspberry Pis"
 
 val animatedledstripServerVersion: String? by project
 val animatedledstripPiVersion: String? by project
-val alsServerVersion = animatedledstripServerVersion ?: "1.0.1"
+val alsServerVersion = animatedledstripServerVersion ?: "1.2.0-SNAPSHOT"
 //val alsPiVersion = animatedledstripPiVersion ?: "1.0.2-SNAPSHOT"
 
 sourceSets.main {
@@ -40,4 +40,15 @@ tasks.withType<ShadowJar> {
     manifest.attributes.apply {
         put("Main-Class", "animatedledstrip.server.example.MainKt")
     }
+}
+dependencies {
+    implementation(kotlin("stdlib-jdk8"))
+}
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
 }

@@ -14,7 +14,7 @@ do
     case "$1" in
         -h)
             shift
-            echo "Usage: ./deploy.bash [-H IP | -H USER@IP]... [-R] [-s SETTINGS_FILE] [-v VERSION]"
+            echo "Usage: ./deploy.bash [-H IP | -H USER@IP]... [-R] :q[-s SETTINGS_FILE] [-v VERSION]"
             echo "      -h          Show this help message"
             echo "      -H IP       Specify a host with username pi"
             echo "      -H USER@IP  Specify a host with a different username"

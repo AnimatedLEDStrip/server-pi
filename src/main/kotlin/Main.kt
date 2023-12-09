@@ -25,5 +25,5 @@ package animatedledstrip.server.example
 import animatedledstrip.server.startServer
 
 fun main(args: Array<String>) {
-    startServer(args, WS281xCompat::class)
+    startServer(args, WS2811Compat::class)
 }

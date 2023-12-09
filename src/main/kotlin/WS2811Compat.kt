@@ -6,17 +6,17 @@ import com.github.mbelling.ws281x.LedStripType
 import com.github.mbelling.ws281x.Ws281xLedStrip
 
 /**
- * Connection between the WS281x class and the NativeLEDStrip interface
+ * Allows running of RGB WS2811 LEDs
  */
-class WS281xCompat(stripInfo: StripInfo) : Ws281xLedStrip(
+class WS2811Compat(stripInfo: StripInfo) : Ws281xLedStrip(
     stripInfo.numLEDs,
     stripInfo.pin ?: 12,
     800000,
     10,
-    255,
+    stripInfo.brightness,
     0,
     false,
-    LedStripType.WS2811_STRIP_GRB,
+    LedStripType.WS2811_STRIP_RGB,
     false,
 ), NativeLEDStrip {
 
