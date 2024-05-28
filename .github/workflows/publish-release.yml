@@ -16,9 +16,11 @@ jobs:
           distribution: "temurin"
           java-version: 21
 
+      - name: Install rpi-ws281x-java Library
+        run: mvn install:install-file -Dfile=src/main/resources/rpi-ws281x-java-2.0.0-SNAPSHOT.jar -DgroupId=com.github.mbelling -DartifactId=rpi-ws281x-java -Dversion=2.0.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
+
       - name: Package Release Jar
         run: |
-          mvn install:install-file -Dfile=src/main/resources/rpi-ws281x-java-2.0.0-SNAPSHOT.jar -DgroupId=com.github.mbelling -DartifactId=rpi-ws281x-java -Dversion=2.0.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
           SERVER_VERSION=$(curl -s https://api.github.com/repos/AnimatedLEDStrip/server/releases/latest | grep --color="never" -P '"tag_name":' | cut -d '"' -f 4)
           ./gradlew shadowJar -PanimatedledstripServerVersion=$SERVER_VERSION
           mv build/libs/animatedledstrip-server-pi-1.0-all.jar build/libs/animatedledstrip-server-pi-${{ github.ref_name }}.jar
