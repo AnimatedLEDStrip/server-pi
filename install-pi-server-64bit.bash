@@ -59,29 +59,6 @@ else
     echo "done"
 fi
 
-#echo -n "Building ledserver..."
-#
-#git clone https://github.com/AnimatedLEDStrip/server-pi.git
-#
-#cd server-pi || exit 1
-#
-#./gradlew shadowJar "-PanimatedledstripServerVersion=${SERVER_VERSION}" --console plain
-#
-## shellcheck disable=SC2181
-#if [[ $? != 0 ]]
-#then
-#    echo "Gradle build failed"
-#    exit 1
-#else
-#    echo "Gradle build successful, continuing with installation..."
-#fi
-
-#echo -n "Determining Pi server version..."
-#
-#PI_SERVER_VERSION=$(./gradlew properties | grep '^version:' | sed 's/version: //g')
-#
-#echo "$PI_SERVER_VERSION"
-
 echo -n "Installing ledserver..."
 
 wget "https://github.com/AnimatedLEDStrip/server-pi/releases/download/${PI_SERVER_VERSION}/animatedledstrip-server-pi-${PI_SERVER_VERSION}-64bit.jar"
