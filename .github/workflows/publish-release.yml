@@ -6,7 +6,7 @@ on:
 
 
 jobs:
-  publish:
+  publish32:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.6
@@ -30,13 +30,45 @@ jobs:
         with:
           file: build/libs/animatedledstrip-server-pi-${{ github.ref_name }}.jar
 
+
+  publish64:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.6
+      - name: Set up JDK
+        uses: actions/setup-java@v4.2.1
+        with:
+          distribution: "temurin"
+          java-version: 21
+
+      - name: Install 64 bit rpi-ws281x-java Library
+        run: mvn install:install-file -Dfile=src/main/resources/rpi-ws281x-java-2.0.0-64bit-SNAPSHOT.jar -DgroupId=com.github.mbelling -DartifactId=rpi-ws281x-java -Dversion=2.0.0-SNAPSHOT -Dpackaging=jar -DgeneratePom=true
+
+      - name: Package Release 64 bit Jar
+        run: |
+          SERVER_VERSION=$(curl -s https://api.github.com/repos/AnimatedLEDStrip/server/releases/latest | grep --color="never" -P '"tag_name":' | cut -d '"' -f 4)
+          ./gradlew shadowJar -PanimatedledstripServerVersion=$SERVER_VERSION
+          mv build/libs/animatedledstrip-server-pi-1.0-all.jar build/libs/animatedledstrip-server-pi-${{ github.ref_name }}-64bit.jar
+
+      - name: Publish Release 64 bit Jar
+        uses: svenstaro/upload-release-action@v2
+        with:
+          file: build/libs/animatedledstrip-server-pi-${{ github.ref_name }}-64bit.jar
+
+
+  publishscripts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.6
       - name: Publish Install Script
         run: |
           git clone https://github.com/AnimatedLEDStrip/animatedledstrip.github.io.git
           cd animatedledstrip.github.io
           cp ../install-pi-server.bash install/install-pi-server.bash
+          cp ../install-pi-server-64bit.bash install/install-pi-server-64bit.bash
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add install/install-pi-server.bash
+          git add install/install-pi-server-64bit.bash
           git commit --allow-empty -m "Update install-pi-server.bash"
           git push -u https://maxnz:${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}@github.com/AnimatedLEDStrip/animatedledstrip.github.io.git master
