@@ -64,11 +64,11 @@ jobs:
         run: |
           git clone https://github.com/AnimatedLEDStrip/animatedledstrip.github.io.git
           cd animatedledstrip.github.io
-          cp ../install-pi-server.bash install/install-pi-server.bash
+          cp ../install-pi-server-32bit.bash install/install-pi-server-32bit.bash
           cp ../install-pi-server-64bit.bash install/install-pi-server-64bit.bash
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add install/install-pi-server.bash
+          git add install/install-pi-server-32bit.bash
           git add install/install-pi-server-64bit.bash
-          git commit --allow-empty -m "Update install-pi-server.bash"
+          git commit --allow-empty -m "Update install-pi-server scripts"
           git push -u https://maxnz:${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}@github.com/AnimatedLEDStrip/animatedledstrip.github.io.git master
